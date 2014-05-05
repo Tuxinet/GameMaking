@@ -3,9 +3,9 @@ package me.tuxinet.Game2.level.tile;
 import me.tuxinet.Game2.screen.Screen;
 import me.tuxinet.Game2.sprites.Sprite;
 
-public class StoneTile extends Tile {
+public class PathTile extends Tile {
 
-	public StoneTile(Sprite sprite) {
+	public PathTile(Sprite sprite) {
 		super(sprite);
 	}
 	
@@ -14,7 +14,7 @@ public class StoneTile extends Tile {
 	}
 	
 	public boolean solid() {
-		return true;
+		return false;
 	}
 
 }

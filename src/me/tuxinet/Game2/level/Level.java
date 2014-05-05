@@ -13,6 +13,8 @@ public class Level {
 	public int h;
 
 	public Sprite sprite;
+	
+	public static Level level = new Level("res/levels/spawn.png/");
 
 	public Level(int w, int h) {
 		this.w = w;
@@ -20,6 +22,17 @@ public class Level {
 		tiles = new int[w * h];
 
 		generateRandom();
+	}
+	
+	public Level(String path) {
+		MapLoader map = new MapLoader(path);
+		tiles = new int[map.w * map.h];
+		this.w = map.w;
+		this.h = map.h;
+		for (int i = 0; i < map.tiles.length; i++) {
+			tiles[i] = map.tiles[i];
+		}
+		System.out.println(tiles[1]);
 	}
 
 	public void generateRandom() {
@@ -48,9 +61,9 @@ public class Level {
 
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= w || y >= h) return Tile.voidTile;
-		if (tiles[x + y * w] == 0) return Tile.grassTile;
-		if (tiles[x + y * w] == 1) return Tile.stoneTile;
-		return Tile.voidTile;
+		if (tiles[x + y * w] == Tile.grassCol) return Tile.grassTile;
+		if (tiles[x + y * w] == Tile.pathCol) return Tile.stoneTile;
+		return Tile.grassTile;
 	}
 
 	public void renderMap(Screen screen) {

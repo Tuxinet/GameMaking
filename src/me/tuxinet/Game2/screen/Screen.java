@@ -61,12 +61,17 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int xx, int yy, Sprite sprite) {
+	public void renderPlayer(int xp, int yp, Sprite sprite) {
+		xp -= xOffset;
+		yp -= yOffset;
 		for (int y = 0; y < sprite.SIZE; y++) {
+			int ya = y + yp;
 			for (int x = 0; x < sprite.SIZE; x++) {
+				int xa = x + xp;
 				int col = sprite.pixels[x + y * sprite.SIZE];
 				if (col == 0xffff00ff) continue;
-				pixels[(xx + x) + (yy + y) * width] = sprite.pixels[x + y * sprite.SIZE];
+				if (xa < -32 || xa >= width || ya < 0 || ya >= height) break;
+				pixels[xa + ya * width] = sprite.pixels[x + y * sprite.SIZE];
 			}
 		}
 	}

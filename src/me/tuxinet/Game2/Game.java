@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 9;
 	public static String title = "Test Game";
 	
-	private Level level;
+	public static Level level;
 	
 	private Player player;
 	
@@ -43,12 +43,12 @@ public class Game extends Canvas implements Runnable {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 		
-		level = new Level(2000, 2000);
-		player = new Player(Sprite.playerSprite);
 		
 		frame = new JFrame();
 		screen = new Screen(width, height);
 		key = new keyboard();
+		level = level.level;
+		player = new Player(0, 0, key, level);
 		
 		addKeyListener(key);
 	}
@@ -107,9 +107,12 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0;
 		}
+		
+		int offsetX = player.x - screen.width / 2;
+		int offsetY = player.y - screen.height / 2;
 
 		level.render(offsetX, offsetY, screen);
-		player.render(width / 2, height / 2, screen);
+		player.render(screen);
 		level.renderMap(screen);
 		
 		for (int i = 0; i < screen.pixels.length; i++) {
@@ -123,6 +126,7 @@ public class Game extends Canvas implements Runnable {
 
 	private void tick() {
 		key.update();
+		player.update();
 		
 		if (key.up) offsetY--;
 		if (key.down) offsetY++;

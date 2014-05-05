@@ -7,7 +7,10 @@ public class Tile {
 	
 	public static Tile grassTile = new GrassTile(Sprite.grassSprite);
 	public static Tile voidTile = new GrassTile(Sprite.voidSprite);
-	public static Tile stoneTile = new StoneTile(Sprite.stoneSprite);
+	public static Tile stoneTile = new PathTile(Sprite.stoneSprite);
+	
+	public static int grassCol = 0x00ff00;
+	public static int pathCol = 0xff646464;
 	
 	public Sprite sprite;
 	
