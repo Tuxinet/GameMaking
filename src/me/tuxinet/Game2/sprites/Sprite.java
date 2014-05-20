@@ -11,11 +11,22 @@ public class Sprite {
 	
 	static Random random = new Random();
 	
-	public static Sprite voidSprite = new Sprite(8, 0x1B87E0);	
-	public static Sprite grassSprite = new Sprite(8, 0, 0, SpriteSheet.textures);
-	public static Sprite stoneSprite = new Sprite(8, 1, 0, SpriteSheet.textures);
-	public static Sprite playerSprite = new Sprite(8, 0, 7, SpriteSheet.textures);
-	//public static Sprite voidSprite = new Sprite(16, random.nextInt(0xffffff));
+	public static Sprite voidSprite = new Sprite(16, 0x1B87E0);	
+	public static Sprite grassSprite = new Sprite(16, 0, 0, SpriteSheet.textures);
+	public static Sprite stoneSprite = new Sprite(16, 1, 0, SpriteSheet.textures);
+	
+	// Player sprites
+	public static Sprite playerup0 = new Sprite(16, 2, 1, SpriteSheet.playerTextures);
+	public static Sprite playerup1 = new Sprite(16, 0, 1, SpriteSheet.playerTextures);
+	public static Sprite playerup2 = new Sprite(16, 1, 1, SpriteSheet.playerTextures);
+	
+	public static Sprite playerdown0 = new Sprite(16, 2, 0, SpriteSheet.playerTextures);
+	public static Sprite playerdown1 = new Sprite(16, 0, 0, SpriteSheet.playerTextures);
+	public static Sprite playerdown2 = new Sprite(16, 1, 0, SpriteSheet.playerTextures);
+	
+	public static Sprite playerside0 = new Sprite(16, 2, 2, SpriteSheet.playerTextures);
+	public static Sprite playerside1 = new Sprite(16, 0, 2, SpriteSheet.playerTextures);
+	public static Sprite playerside2 = new Sprite(16, 1, 2, SpriteSheet.playerTextures);
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;

@@ -57,23 +57,27 @@ public class Screen {
 				if (xa < -tile.sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
 				pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
-			}
+			}			
 		}
 	}
 
-	public void renderPlayer(int xp, int yp, Sprite sprite) {
+	public void renderPlayer(int xp, int yp, boolean flipped,  Sprite sprite) {
 		xp -= xOffset;
 		yp -= yOffset;
 		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
 			for (int x = 0; x < sprite.SIZE; x++) {
+				int xs = x;
 				int xa = x + xp;
-				int col = sprite.pixels[x + y * sprite.SIZE];
+				if (flipped) {
+					xs = sprite.SIZE - 1 - x;
+				}
+				int col = sprite.pixels[xs + y * sprite.SIZE];
 				if (col == 0xffff00ff) continue;
 				if (xa < -32 || xa >= width || ya < 0 || ya >= height) break;
-				pixels[xa + ya * width] = sprite.pixels[x + y * sprite.SIZE];
+				pixels[xa + ya * width] = sprite.pixels[xs + y * sprite.SIZE];
 			}
-		}
+		}			
 	}
 	
 	public void setOffset(int xOffset, int yOffset) {

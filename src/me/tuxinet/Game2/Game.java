@@ -6,24 +6,25 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+
 import javax.swing.JFrame;
 
+import me.tuxinet.Game2.Entity.Player;
 import me.tuxinet.Game2.input.keyboard;
 import me.tuxinet.Game2.level.Level;
-import me.tuxinet.Game2.player.Player;
 import me.tuxinet.Game2.screen.Screen;
-import me.tuxinet.Game2.sprites.Sprite;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
+
 		
 	private boolean running = false;
-	public static int width = 100;
+	public static int width = 300;
 	public static int height = width / 16 * 9;
-	public static int scale = 9;
-	public static String title = "Test Game";
+	public static int scale = 3;
+	public static String title = "Testgame";
 	
-	public static Level level;
+	private Level level;
 	
 	private Player player;
 	
@@ -31,10 +32,7 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private keyboard key;
 	
-	public static Screen screen;
-	
-	private int offsetX = 0;
-	private int offsetY = 0;
+	public Screen screen;
 	
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -47,8 +45,9 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		screen = new Screen(width, height);
 		key = new keyboard();
-		level = level.level;
+		level = new Level("/levels/level.png");
 		player = new Player(0, 0, key, level);
+		player.init(level);
 		
 		addKeyListener(key);
 	}
@@ -71,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
-		final double ns = 1000000000.0 / 30;
+		final double ns = 1000000000.0 / 60;
 		double delta = 0;
 		int frames = 0;
 		int ticks = 0;
@@ -98,6 +97,7 @@ public class Game extends Canvas implements Runnable {
 	
 	
 	private void render() {
+		
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
@@ -110,10 +110,12 @@ public class Game extends Canvas implements Runnable {
 		
 		int offsetX = player.x - screen.width / 2;
 		int offsetY = player.y - screen.height / 2;
+		
+		
+		screen.clearScreen();
 
 		level.render(offsetX, offsetY, screen);
 		player.render(screen);
-		level.renderMap(screen);
 		
 		for (int i = 0; i < screen.pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
@@ -128,12 +130,7 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		player.update();
 		
-		if (key.up) offsetY--;
-		if (key.down) offsetY++;
-		if (key.left) offsetX--;
-		if (key.right) offsetX++;
-		
-		if (key.regen) level.generateRandom();
+		if (key.regen) level = new Level("/levels/level2.png");
 	}
 
 	public static void main(String[] args) {
